@@ -6,25 +6,34 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         boolean authenticated = false;
+        Bank bank = new Bank();
 
         System.out.println("Welcome to DanBank!");
-        System.out.println("What is your account name?");
-        String accountName = scanner.nextLine();
-        System.out.println("What is your starting balance?");
-        double accountBalance = scanner.nextDouble();
-        System.out.println("Please add a four digit pin to your account!");
-        int accountPin = scanner.nextInt();
 
-        Account account1 = new Account(accountName, accountBalance, accountPin);
-
+        Account account1 = null;
+        
         while (!authenticated){
-            System.out.println("Please insert PIN to access account");
-            int pinInput = scanner.nextInt();  
-            if(pinInput == accountPin){
-                authenticated = true;
-            } else {
-                System.out.println("Incorrect Pin, try again");
+            if (bank.hasAccounts()) {
+                 System.out.println("Please insert PIN to access account");
+                    int pinInput = scanner.nextInt();  
+                    if(pinInput == account1.getPin()){
+                        authenticated = true;
+                    } else {
+                        System.out.println("Incorrect Pin, try again");
+                    }                
             }
+            else{
+                    System.out.println("What is your account name?");
+                    String accountName = scanner.nextLine();
+                    System.out.println("What is your starting balance?");
+                    double accountBalance = scanner.nextDouble();
+                    System.out.println("Please add a four digit pin to your account!");
+                    int accountPin = scanner.nextInt();
+                    account1 = new Account(accountName, accountBalance, accountPin);
+                    bank.addAccount(account1);
+                    System.out.println("Account created! Please login.");
+            }
+
         }
         while (running){
             System.out.println("1. Deposit");

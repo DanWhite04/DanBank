@@ -39,5 +39,9 @@ public class Account{
     public ArrayList<String> getTransactionHistory() {
         return transactionHistory;
     }          
+    
+    public int getPin(){
+        return pin;
+    }
         
     }
