@@ -1,7 +1,10 @@
+import java.io.IOException;
 import java.util.Scanner;
+
 public class Main {
       
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws IOException {
         
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -11,11 +14,16 @@ public class Main {
         System.out.println("Welcome to DanBank!");
 
         Account account1 = null;
-        
+        bank.loadAccounts();
+
         while (!authenticated){
             if (bank.hasAccounts()) {
+                System.out.println("Enter your account name:");
+                String loginName = scanner.nextLine();
+                account1 = bank.findAccount(loginName);
                  System.out.println("Please insert PIN to access account");
                     int pinInput = scanner.nextInt();  
+                    scanner.nextLine();
                     if(pinInput == account1.getPin()){
                         authenticated = true;
                     } else {
@@ -29,6 +37,7 @@ public class Main {
                     double accountBalance = scanner.nextDouble();
                     System.out.println("Please add a four digit pin to your account!");
                     int accountPin = scanner.nextInt();
+                    scanner.nextLine();
                     account1 = new Account(accountName, accountBalance, accountPin);
                     bank.addAccount(account1);
                     System.out.println("Account created! Please login.");
@@ -75,6 +84,7 @@ public class Main {
                     }
                     break;
             }
+            bank.saveAccounts();
         }
     }   
             
